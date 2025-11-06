@@ -6,8 +6,8 @@ import util.config;
 
 import javax.sql.DataSource;
 
-public final class ErpDataSourceFactory {
-    private ErpDataSourceFactory() {}
+public final class ErpDataSource {
+    private ErpDataSource() {}
 
     public static DataSource build() {
         HikariConfig c = new HikariConfig();

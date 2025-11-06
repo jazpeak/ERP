@@ -7,8 +7,8 @@ import util.config;
 
 import javax.sql.DataSource;
 
-public final class AuthDataSourceFactory {
-    private AuthDataSourceFactory() {}
+public final class AuthDataSource {
+    private AuthDataSource() {}
 
     public static DataSource build() {
         HikariConfig c = new HikariConfig();
