@@ -4,6 +4,7 @@ import data.BaseDao;
 import domain.User;
 import javax.sql.DataSource;
 import java.sql.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class AuthDao extends BaseDao {
 
@@ -32,4 +33,32 @@ public class AuthDao extends BaseDao {
         }
         return null;
     }
+
+    public int addUser(String username, String role, String rawPassword) {
+        String sql = "INSERT INTO users_auth (username, role, password_hash) VALUES (?, ?, ?)";
+        String hashed = BCrypt.hashpw(rawPassword, BCrypt.gensalt());
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, username);
+            ps.setString(2, role);
+            ps.setString(3, hashed);
+            ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.err.println("[ERROR] Username already exists.");
+            return -2;
+        } catch (SQLException e) {
+            System.err.println("[SQL ERROR] " + e.getMessage());
+        }
+
+        return -1;
+    }
+
 }

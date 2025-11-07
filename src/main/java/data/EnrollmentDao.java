@@ -1,6 +1,7 @@
 package data;
 
 import domain.Enrollment;
+import domain.Student;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
@@ -64,4 +65,54 @@ public class EnrollmentDao extends BaseDao {
             return false;
         }
     }
+
+    public List<Enrollment> getBySection(int sectionId) {
+        List<Enrollment> list = new ArrayList<>();
+        String sql = "SELECT enroll_id, student_id, section_id, status FROM enrollments where section_id=?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)){
+             ps.setInt(1,sectionId);
+             ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Enrollment e = new Enrollment();
+                e.setEnrollId(rs.getInt("enroll_id"));
+                e.setStudentId(rs.getInt("student_id"));
+                e.setSectionId(rs.getInt("section_id"));
+                e.setStatus(rs.getString("status"));
+                list.add(e);
+            }
+        } catch (SQLException ex) {
+            printError(ex);
+        }
+        return list;
+    }
+
+    public List<Student> getStudentsBySection(int sectionId) {
+        List<Student> students = new ArrayList<>();
+        String sql = "SELECT s.user_id, s.roll_no, s.prog, s.year FROM students s JOIN enrollments e ON s.user_id = e.student_id WHERE e.section_id = ? AND e.status = 'enrolled'";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, sectionId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Student s = new Student();
+                s.setUserId(rs.getInt("user_id"));
+                s.setRollNo(rs.getString("roll_no"));
+                s.setProg(rs.getString("prog"));
+                s.setYear(rs.getInt("year"));
+                students.add(s);
+            }
+        } catch (SQLException e) {
+            printError(e);
+        }
+        return students;
+    }
+
+
+
+
 }
