@@ -7,7 +7,7 @@ public final class config {
         try (var in = config.class.getResourceAsStream("/application.properties")) {
             if (in == null) throw new IllegalStateException("application.properties not found");
             P.load(in);
-        } catch (Exception e) { throw new RuntimeException(e); }
+        } catch (Exception e) { throw new RuntimeException("Failed to load application: " + e.getMessage(),e); }
     }
     private config() {}
     public static String get(String k){ return P.getProperty(k); }

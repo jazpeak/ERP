@@ -1,17 +1,55 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import auth.AuthDataSource;
+import auth.AuthDao;
+import data.CourseDao;
+import data.SectionDao;
+import data.ErpDataSource;
+import data.StudentDao;
+import data.EnrollmentDao;
+import domain.Enrollment;
+import domain.User;
+import domain.Course;
+import domain.Section;
+import domain.Student;
+
+import javax.sql.DataSource;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        DataSource authDS = AuthDataSource.build();
+        DataSource erpDS = ErpDataSource.build();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        AuthDao authDao = new AuthDao(authDS);
+        User user = authDao.findByUsername("admin1");
+        if (user != null)
+            System.out.println("Found user: " + user.getUsername() + " (" + user.getRole() + ")");
+        else
+            System.out.println("User not found");
+
+        CourseDao courseDao = new CourseDao(erpDS);
+        List<Course> courses = courseDao.getAllCourses();
+        System.out.println("\n Courses:");
+        for (Course c : courses) System.out.println(" - " + c);
+
+        SectionDao sectionDao = new SectionDao(erpDS);
+        List<Section> sections = sectionDao.getAllSections();
+        System.out.println("\n Sections:");
+        for (Section s : sections) System.out.println(" - " + s);
+
+        StudentDao studentDao = new StudentDao(erpDS);
+        System.out.println("\nStudents:");
+        for (Student s : studentDao.getAllStudents())
+            System.out.println(" - " + s);
+
+        EnrollmentDao enrollmentDao = new EnrollmentDao(erpDS);
+        System.out.println("\n Enrollments:");
+        for (Enrollment e : enrollmentDao.getAllEnrollments())
+            System.out.println(" - " + e);
+
+        System.out.println("\nRegistering Student 2 in Section 2...");
+        enrollmentDao.enrollStudent(2, 2);
+
     }
 }
