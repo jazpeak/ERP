@@ -67,6 +67,41 @@ public class SectionDao extends BaseDao {
         return sections;
     }
 
+    public boolean assignInstructor(int sectionId, int instructorId) {
+        String sql = "UPDATE sections SET inst_id = ? WHERE section_id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, instructorId);
+            ps.setInt(2, sectionId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            printError(e);
+            return false;
+        }
+    }
+
+    public int createSection(String courseCode, Integer instructorId, String day, String timeSlot, String room, int capacity, String semester, int year) {
+        String sql = "INSERT INTO sections (course_code, inst_id, day, time_slot, room, cap, sem, year) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, courseCode);
+            if (instructorId == null) ps.setNull(2, Types.INTEGER); else ps.setInt(2, instructorId);
+            ps.setString(3, day);
+            ps.setString(4, timeSlot);
+            ps.setString(5, room);
+            ps.setInt(6, capacity);
+            ps.setString(7, semester);
+            ps.setInt(8, year);
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) {
+            printError(e);
+        }
+        return -1;
+    }
 
 
 }

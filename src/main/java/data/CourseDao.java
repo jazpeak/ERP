@@ -31,4 +31,37 @@ public class CourseDao extends BaseDao {
         }
         return list;
     }
+
+    public boolean exists(String code) {
+        String sql = "SELECT 1 FROM courses WHERE code = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, code);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            printError(e);
+            return false;
+        }
+    }
+
+    public boolean createCourse(String code, String title, int credits) {
+        if (exists(code)) {
+            System.out.println("Course already exists: " + code);
+            return false;
+        }
+        String sql = "INSERT INTO courses (code, title, credits) VALUES (?, ?, ?)";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, code);
+            ps.setString(2, title);
+            ps.setInt(3, credits);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            printError(e);
+            return false;
+        }
+    }
+
 }

@@ -49,4 +49,16 @@ public class InstructorDao extends BaseDao {
         }
         return null;
     }
+    public void addInstructor(int userId, String department) {
+        String sql = "INSERT INTO instructors (user_id, dept) VALUES (?, ?)";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setString(2, department);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("[SQL ERROR] " + e.getMessage());
+        }
+    }
+
 }

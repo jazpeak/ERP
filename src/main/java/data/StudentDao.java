@@ -53,4 +53,19 @@ public class StudentDao extends BaseDao {
         }
         return null;
     }
+
+    public void addStudent(int userId, String rollNo, String program, int year) {
+        String sql = "INSERT INTO students (user_id, roll_no, prog, year) VALUES (?, ?, ?, ?)";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.setString(2, rollNo);
+            ps.setString(3, program);
+            ps.setInt(4, year);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("[SQL ERROR] " + e.getMessage());
+        }
+    }
+
 }
