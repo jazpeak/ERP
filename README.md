@@ -3,17 +3,14 @@
 A robust, Java-based Enterprise Resource Planning (ERP) desktop application designed for university administration, instructors, and students. Built with Java Swing, the application features a modern UI using FlatLaf and connects to a dual-database MySQL backend.
 
 
-
-
-
-## � Demo Video
+## Demo Video
 Check out the system in action:
 
 https://github.com/user-attachments/assets/84a17342-5008-4b2a-8cf0-bfef6a983a68
 
 *(If the video player doesn't load instantly, [click here to view the demo video](https://github.com/jazpeak/ERP/blob/master/ERPDemoVideo.mp4))*
 
-## �🚀 Features
+## Features
 
 - **Role-Based Access Controls**: Distinct dashboards, modules, and workflows for Admins, Instructors, and Students.
 - **Modern UI**: Clean, responsive layout employing [FlatLaf](https://www.formdev.com/flatlaf/) for dynamic themes, and MigLayout for precision spacing.
@@ -30,7 +27,7 @@ https://github.com/user-attachments/assets/84a17342-5008-4b2a-8cf0-bfef6a983a68
 - **jBCrypt** (Password Security)
 - **JUnit 5** (Testing)
 
-## ⚙️ Setup & Installation
+## Setup & Installation
 
 ### 1. Database Setup
 Create the required MySQL databases:
@@ -61,7 +58,7 @@ mysql -u root -p erp_db < src/main/resources/init_erp_db.sql
 ```
 *(This maps the default credentials required below).*
 
-## 🏃 Running the Application
+##Running the Application
 
 ### Via Command Line (Maven)
 Make sure Maven is on your PATH, then jump to the root directory mapping this repo:
@@ -79,7 +76,7 @@ mvn exec:java -Dexec.mainClass="ui.Main"
 2. Configure **Java 21** as your SDK framework.
 3. Locate and execute the `main()` frame method in `src/main/java/ui/Main.java`.
 
-## 🔑 Default Seeded Accounts
+## Default Seeded Accounts
 
 System tests come heavily seeded. Log in contextually using the credentials below (where unspecified, passwords match the usernames):
 
