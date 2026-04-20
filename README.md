@@ -1,4 +1,4 @@
-# 🎓 University ERP System
+# University ERP System
 
 A robust, Java-based Enterprise Resource Planning (ERP) desktop application designed for university administration, instructors, and students. Built with Java Swing, the application features a modern UI using FlatLaf and connects to a dual-database MySQL backend.
 
@@ -17,7 +17,7 @@ https://github.com/user-attachments/assets/84a17342-5008-4b2a-8cf0-bfef6a983a68
 - **Secure Authentication**: Dual database model isolating user credentials (`auth_db`) from application business logic (`erp_db`). Passwords comprehensively hashed utilizing jBCrypt.
 - **High Performance**: Employs HikariCP for streamlined SQL connection pooling.
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **Java 21**
 - **Maven**
@@ -58,7 +58,7 @@ mysql -u root -p erp_db < src/main/resources/init_erp_db.sql
 ```
 *(This maps the default credentials required below).*
 
-##Running the Application
+## Running the Application
 
 ### Via Command Line (Maven)
 Make sure Maven is on your PATH, then jump to the root directory mapping this repo:
@@ -89,7 +89,7 @@ System tests come heavily seeded. Log in contextually using the credentials belo
 - **Student Accounts**: 
   `stu1`, `stu2`, `amit`, `bhavya`, `celine`, `devyaansh`, `esha`
 
-## 🧪 Testing
+## Testing
 
 The codebase is highly coupled to programmatic tests extending DAO and Service validation parameters:
 ```sh
