@@ -5,7 +5,9 @@ A robust, Java-based Enterprise Resource Planning (ERP) desktop application desi
 ## � Demo Video
 Check out the system in action:
 
-<video src="ERPDemoVideo.mp4" width="600" controls></video>
+<video src="https://github.com/jazpeak/ERP/raw/master/ERPDemoVideo.mp4" width="800" controls></video>
+
+*(If the video player doesn't load instantly, [click here to view the demo video](https://github.com/jazpeak/ERP/blob/master/ERPDemoVideo.mp4))*
 
 ## �🚀 Features
 
