@@ -13,7 +13,7 @@ public class SettingDao extends BaseDao {
     public Setting getSetting(String key) {
         String sql = "SELECT * FROM settings WHERE `key`=?";
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -29,23 +29,40 @@ public class SettingDao extends BaseDao {
     }
 
     public void updateSetting(String key, String value) {
-        String sql = "UPDATE settings SET value=? WHERE `key`=?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, value);
-            ps.setString(2, key);
-            ps.executeUpdate();
+        String upd = "UPDATE settings SET value=? WHERE `key`=?";
+        String ins = "INSERT INTO settings(`key`, value) VALUES(?, ?)";
+        try (Connection conn = dataSource.getConnection()) {
+            try (PreparedStatement ps = conn.prepareStatement(upd)) {
+                ps.setString(1, value);
+                ps.setString(2, key);
+                int n = ps.executeUpdate();
+                if (n == 0) {
+                    try (PreparedStatement ip = conn.prepareStatement(ins)) {
+                        ip.setString(1, key);
+                        ip.setString(2, value);
+                        ip.executeUpdate();
+                    }
+                }
+            }
         } catch (SQLException e) {
             printError(e);
         }
     }
 
     public void setMaintenance(boolean on) {
-        String sql = "UPDATE settings SET value=? WHERE `key`='maintenance'";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, on ? "on" : "off");
-            ps.executeUpdate();
+        String upd = "UPDATE settings SET value=? WHERE `key`='maintenance'";
+        String ins = "INSERT INTO settings(`key`, value) VALUES('maintenance', ?)";
+        try (Connection conn = dataSource.getConnection()) {
+            try (PreparedStatement ps = conn.prepareStatement(upd)) {
+                ps.setString(1, on ? "on" : "off");
+                int n = ps.executeUpdate();
+                if (n == 0) {
+                    try (PreparedStatement insPs = conn.prepareStatement(ins)) {
+                        insPs.setString(1, on ? "on" : "off");
+                        insPs.executeUpdate();
+                    }
+                }
+            }
         } catch (SQLException e) {
             System.err.println("[SQL ERROR] " + e.getMessage());
         }
@@ -54,8 +71,8 @@ public class SettingDao extends BaseDao {
     public boolean isMaintenanceOn() {
         String sql = "SELECT value FROM settings WHERE `key`='maintenance'";
         try (Connection conn = dataSource.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
             if (rs.next()) {
                 return "on".equalsIgnoreCase(rs.getString("value"));
             }

@@ -1,9 +1,6 @@
 package data;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class BaseDao {
@@ -15,7 +12,10 @@ public abstract class BaseDao {
 
     protected void close(AutoCloseable ac) {
         if (ac != null) {
-            try { ac.close(); } catch (Exception ignored) {}
+            try {
+                ac.close();
+            } catch (Exception ignored) {
+            }
         }
     }
 

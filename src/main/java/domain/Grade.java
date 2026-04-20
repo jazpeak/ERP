@@ -7,7 +7,7 @@ public class Grade {
     private String finalGrade;
 
     public int getEnrollmentId() { return enroll_Id; }
-    public void setEnrollmentId(int enrollmentId) { this.enroll_Id = enroll_Id; }
+    public void setEnrollmentId(int enrollmentId) { this.enroll_Id = enrollmentId; }
 
     public String getComponent() { return component; }
     public void setComponent(String component) { this.component = component; }
