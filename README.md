@@ -3,15 +3,13 @@
 A robust, Java-based Enterprise Resource Planning (ERP) desktop application designed for university administration, instructors, and students. Built with Java Swing, the application features a modern UI using FlatLaf and connects to a dual-database MySQL backend.
 
 
-https://github.com/user-attachments/assets/84a17342-5008-4b2a-8cf0-bfef6a983a68
+
 
 
 ## � Demo Video
 Check out the system in action:
 
-<video width="800" controls>
-  <source src="https://raw.githubusercontent.com/jazpeak/ERP/master/ERPDemoVideo.mp4" type="video/mp4">
-</video>
+https://github.com/user-attachments/assets/84a17342-5008-4b2a-8cf0-bfef6a983a68
 
 *(If the video player doesn't load instantly, [click here to view the demo video](https://github.com/jazpeak/ERP/blob/master/ERPDemoVideo.mp4))*
 
