@@ -1,3 +1,11 @@
+## Author
+
+**Jazl Anwar Mundam Valappil**
+- GitHub: [@jazpeak](https://github.com/jazpeak)
+- LinkedIn: [Jazl Anwar](https://www.linkedin.com/in/jazlanwar/)
+- Email: jazl24283@iiitd.ac.in
+- Number: +91 8129441888
+
 # University ERP System
 
 A robust, Java-based Enterprise Resource Planning (ERP) desktop application designed for university administration, instructors, and students. Built with Java Swing, the application features a modern UI using FlatLaf and connects to a dual-database MySQL backend.
